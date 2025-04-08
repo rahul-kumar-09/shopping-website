@@ -1,0 +1,39 @@
+.navbar_container{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin: auto;
+    padding: 2px 80px 2px 80px;
+    background-color: #2B3035;
+    color: white;
+    padding: 10px 20px 10px 20px;
+}
+
+.title{
+    font-size: x-large;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.nav_item{
+    display: flex;
+    gap: 50px;
+
+
+    a{
+        text-decoration: none;
+        color: white;
+        font-size: larger;
+        font-weight: 500;
+    }
+
+    a:hover{
+        color: blue;
+    }
+
+    li{
+        list-style: none;
+    }
+    
+
+}
