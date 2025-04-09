@@ -28,7 +28,7 @@ export const Products = () => {
       {product.map((item, index) => {
         return (
           <div key={index} className={styles.card}>
-            <Link to='/product/2'>
+            <Link to={`/product/${item.id}`}>
               <img src={item.image} className={styles.cardImage} alt="" />{" "}
             </Link>
             <div className={styles.cardContent}>

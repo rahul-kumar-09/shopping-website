@@ -22,7 +22,7 @@ export const SingleProduct = () => {
 
     useEffect(() => {
         fetchProducts();
-    }, [id]);
+    }, []);
 
     return (
         <div className={styles.productContainer}>
