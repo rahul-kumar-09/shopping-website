@@ -32,14 +32,14 @@ export const Products = () => {
               <img src={item.image} className={styles.cardImage} alt="" />{" "}
             </Link>
             <div className={styles.cardContent}>
-              <Link to='/product/2' className={styles.cardLink}>
+              <Link to={`/product/${item.id}`} className={styles.cardLink}>
                 <p className={styles.title}>{item.title}</p>
                 <div className={styles.bottomSection}>
                   <p className={styles.rating}>{item.category}</p>
                   <p className={styles.price}>{item.price}</p>
                 </div>
               </Link>
-              <button className={styles.btn}>
+              <button className='addToCartBtn' style={{width: "100%"}}>
                 Add to Cart
               </button>
             </div>

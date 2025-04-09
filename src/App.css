@@ -113,6 +113,22 @@ img {
   grid-template-columns: repeat(4, 1fr);
 }
 
+/* button style  */
+.addToCartBtn {
+  background: #ff6b00;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.addToCartBtn:hover {
+  background: #d55a00;
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
   .grid-2, .grid-3, .grid-4 {
