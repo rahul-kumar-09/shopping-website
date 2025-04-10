@@ -19,7 +19,6 @@
     display: flex;
     gap: 50px;
 
-
     a{
         text-decoration: none;
         color: white;
@@ -34,6 +33,18 @@
     li{
         list-style: none;
     }
-    
+}
 
+.logoutBtn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: larger;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+}
+
+.logoutBtn:hover {
+    color: blue;
 }

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./Login.css";
@@ -10,9 +10,16 @@ export const Login = () => {
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
   const usernameRef = useRef(null);
   const passwordRef = useRef(null);
+
+  useEffect(() => {
+    // Redirect if already authenticated
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,7 +41,6 @@ export const Login = () => {
     navigator.clipboard.writeText(passwordRef.current.value);
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -51,8 +57,12 @@ export const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        login(data.token);
-        navigate("/");
+        try {
+          login(data.token);
+          navigate("/");
+        } catch (tokenError) {
+          setError("Invalid token received from server");
+        }
       } else {
         setError(data.message || "Login failed");
       }
@@ -91,12 +101,12 @@ export const Login = () => {
           </div>
           <div className="login-credentials">
             <p>
-            <input type="text" ref={usernameRef} value="mor_2314" />
-            <button onClick={usernameCopyText}>Copy</button>
+              <input type="text" ref={usernameRef} value="mor_2314" readOnly />
+              <button type="button" onClick={usernameCopyText}>Copy</button>
             </p>
             <p>
-              <input type="text" ref={passwordRef} value="83r5^_" />
-              <button onClick={passwordCopyText}>Copy</button>
+              <input type="text" ref={passwordRef} value="83r5^_" readOnly />
+              <button type="button" onClick={passwordCopyText}>Copy</button>
             </p>
           </div>
           <button type="submit" className="login-button">Login</button>
