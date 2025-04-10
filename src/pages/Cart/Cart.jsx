@@ -48,7 +48,7 @@ export const Cart = () => {
             <button 
               onClick={() => {
                 removeFromCart(item.id);
-                toast.success("Product removed from cart");
+                toast.success("Product removed from cart", {position: "bottom-right",});
               }}
               className={styles.removeButton}
             >
