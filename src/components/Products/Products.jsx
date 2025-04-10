@@ -3,7 +3,7 @@ import styles from "./Products.module.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
-
+import { ToastContainer, toast } from 'react-toastify';
 export const Products = () => {
   const [products, setProducts] = useState([]);
   const { addToCart } = useCart();
@@ -35,13 +35,17 @@ export const Products = () => {
             </Link>
             <button 
               className={styles.btn} 
-              onClick={() => handleAddToCart(item)}
+              onClick={() => {
+                handleAddToCart(item);
+                toast.success("Product added Successfully");
+              }}
             >
               Add to Cart
             </button>
           </div>
         </div>
       ))}
+      <ToastContainer autoClose={4000} />
     </div>
   );
 };

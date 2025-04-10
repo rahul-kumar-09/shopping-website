@@ -1,6 +1,7 @@
 import React from 'react';
 import { useCart } from '../../context/CartContext';
 import styles from './Cart.module.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 export const Cart = () => {
   const { cartItems, removeFromCart, updateQuantity } = useCart();
@@ -45,14 +46,19 @@ export const Cart = () => {
               </div>
             </div>
             <button 
-              onClick={() => removeFromCart(item.id)}
+              onClick={() => {
+                removeFromCart(item.id);
+                toast.success("Product removed from cart");
+              }}
               className={styles.removeButton}
             >
               Remove
             </button>
           </div>
         ))}
+
       </div>
+        <ToastContainer autoClose={4000} />
       <div className={styles.cartSummary}>
         <h3>Order Summary</h3>
         <div className={styles.summaryRow}>
