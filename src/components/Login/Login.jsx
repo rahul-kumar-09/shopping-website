@@ -1,55 +1,107 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./Login.module.css";
+import { useAuth } from "../../context/AuthContext";
+import "./Login.css";
 
 export const Login = () => {
-  const [formData, setFormData] = useState({ username: "", password: "" });
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: ""
+  });
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // To redirect after login
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  const usernameRef = useRef(null);
+  const passwordRef = useRef(null);
 
-  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setCredentials(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
-  // Handle form submission
+  //copy text to clipboard
+  const usernameCopyText = () => {
+    usernameRef.current.select();
+    usernameRef.current.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(usernameRef.current.value);
+  };
+  const passwordCopyText = () => {
+    passwordRef.current.select();
+    passwordRef.current.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(passwordRef.current.value);
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     try {
-      const response = await axios.post("https://fakestoreapi.com/auth/login", {
-        username: formData.username,
-        password: formData.password,
+      const response = await fetch("https://fakestoreapi.com/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials)
       });
 
-      console.log("Login successful:", response.data);
-      localStorage.setItem("token", response.data.token); // Store token
-      navigate("/"); // Redirect to home page
-    } catch (error) {
-      console.error("Login failed:", error);
-      setError("Invalid username or password!");
+      const data = await response.json();
+
+      if (response.ok) {
+        login(data.token);
+        navigate("/");
+      } else {
+        setError(data.message || "Login failed");
+      }
+    } catch (err) {
+      setError("An error occurred during login");
     }
   };
 
   return (
-    <div className={styles.container} style={{marginTop: "200px"}}>
-      <h2>Login</h2>
-      {error && <p className={styles.error}>{error}</p>}
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <div className={styles.inputGroup}>
-          <label>Username</label>
-          <input type="text" name="username" value={formData.username} onChange={handleChange} required />
-        </div>
-
-        <div className={styles.inputGroup}>
-          <label>Password</label>
-          <input type="password" name="password" value={formData.password} onChange={handleChange} required />
-        </div>
-
-        <button type="submit" className={styles.btn}>Login</button>
-      </form>
+    <div className="login-container">
+      <div className="login-box">
+        <h2>Login</h2>
+        {error && <div className="error-message">{error}</div>}
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={credentials.username}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={credentials.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="login-credentials">
+            <p>
+            <input type="text" ref={usernameRef} value="mor_2314" />
+            <button onClick={usernameCopyText}>Copy</button>
+            </p>
+            <p>
+              <input type="text" ref={passwordRef} value="83r5^_" />
+              <button onClick={passwordCopyText}>Copy</button>
+            </p>
+          </div>
+          <button type="submit" className="login-button">Login</button>
+        </form>
+      </div>
     </div>
   );
 };
