@@ -37,7 +37,7 @@ export const Products = () => {
               className={styles.btn} 
               onClick={() => {
                 handleAddToCart(item);
-                toast.success("Product added Successfully");
+                toast.success("Product added Successfully", {position: "bottom-right",});
               }}
             >
               Add to Cart
