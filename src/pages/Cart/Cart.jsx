@@ -24,7 +24,7 @@ export const Cart = () => {
       <h2>Your Cart</h2>
       <div className={styles.cartItems}>
         {cartItems.map((item) => (
-          <div key={item.id} className={styles.cartItem}>
+          <div key={item.id} className={styles.cartItem} style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
             <img src={item.image} alt={item.title} className={styles.itemImage} />
             <div className={styles.itemDetails}>
               <h3>{item.title}</h3>
