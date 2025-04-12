@@ -11,6 +11,13 @@
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
   }
+
+  @media (max-width: 768px) {
+    .productContainer {
+      flex-direction: column;
+      height: auto;
+    }
+  }
   
   .imageContainer {
     flex: 1;
